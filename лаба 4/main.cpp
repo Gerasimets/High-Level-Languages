@@ -5,7 +5,7 @@
 #include<locale.h>
 #include<stdlib.h>
 #include < string.h > 
-//#include <pch.h>
+#include <pch.h>
 
 void show(int mode, int i);
 using namespace std;
@@ -29,7 +29,7 @@ public:
 
 	int srav(int a) // заданная зарплата 
 	{
-		if (salary >= a) //если зарплата больше или равна заданной, то
+		if (salary >/*=*/ a) //если зарплата больше заданной, то
 			return 0;
 		else
 			return 1;
