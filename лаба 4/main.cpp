@@ -1,157 +1,141 @@
-//Worker: Фамилия и инициалы, Должность, Год поступления на работу, Зарплата.Создать массив объектов.
-//Вывести : а) список работников, стаж работы которых на данном предприятии превышает заданное число лет;
-//список работников, зарплата которых больше заданной; в) список работников, занимающих заданную должность.
 #include <iostream>
-#include<locale.h>
-#include<stdlib.h>
-#include < string.h > 
-//#include <pch.h>
-//#define YES 1
-//#define NO 0 
 
-void show(int mode, int i);
 using namespace std;
-
-class Worker
+class Worker //описывает, то что мы можем выполнять с конкретными объектами
 {
 private:
-    //свойства класса
-    char surname[100]; //фамилия и инициалы выводить посимвольно, вывод фором пока итый эл не станет /0
-    char position[100]; //должность
-    int start_of_work; //год поступления на работу
-    int salary; //зарплата
+
+    string surname;
+    string initials;
+    string position;
+    int start_of_work;
+    int salary;
 
 public:
-    //методы класса
-    int sravni(int y) //у = стаж
-    {
-        if (2019 - start_of_work >= y) //если настоящий год минус год начала работы больше или равен введенному стажу, то
-            return 0;
-        else
-            cout << "Нет работника с заданным стажом работы" << endl;
-            return 1;
-    }
 
-    int srav(int a) // заданная зарплата 
+    void set()
     {
-        if (salary > a) //если зарплата больше или равна заданной, то
-            return 0;
-        else
-            cout << "Нет работника с заданной заплатой" << endl;
-            return 1;
-    }
-
-    int srp(char x[100])
-    {
-        if (strcmp(x, position) == 0)
-            return 0;
-        else
-            cout << "Нет работника с заданной должностью" << endl;
-        return 1;
-        system("pause");
-
-    }
-
-    void get(void)
-    {
-        /*system("cls");*/
-        cout << "Фамилия и инициалы: " << surname << endl;
-        cout << "Должность: " << position << endl;
-        cout << "Год поступления на работу: " << start_of_work << endl;
-        cout << "зарплата: " << salary << endl;
-        system("pause");
-    }
-
-    void set(void)
-    {
-        cout << "Введите фамилию и инициалы работника: " << endl;
-        cin.get();
-        cin.getline(surname, 100);
-        cout << "Введите должность: " << endl;
-        cin.getline(position, 100);
-        cout << "Введите год поступления на работу: " << endl;
+        cout << "Введите  фамилию и инициалы" << endl;
+        cin >> surname;
+        cin >> initials;
+        cout << "Введите должность" << endl;
+        cin >> position;
+        cout << "Введите год поступления на работу" << endl;
         cin >> start_of_work;
-        cout << "Введите зарплату: " << endl;
+        cout << "Введите зарплату" << endl;
         cin >> salary;
+    }
+    void show()
+    {
+        cout << "фамилия и инициалы: " << surname; cout << " ";  cout << initials << endl;
+        cout << "должность: " << position << endl;
+        cout << "год поступления на работу: " << start_of_work << endl;
+        cout << "зарплата: " << salary << endl;
+    }
+    //несколько get чтобы, когда нам нужно вызвать одну переменную, мы не вызывали сразу все
+    string get_position()
+    {
+        return position;
+    }
+    int get_salary()
+    {
+        return salary;
+    }
+    int get_start_of_work()
+    {
+        return start_of_work;
     }
 };
 
-class Worker* library;
-
-
-int main(void)
+int main(int argc, const char* argv[])
 {
-    int ans, i = 0;
     setlocale(LC_ALL, "Russian");
-    do
+
+    int menu_1 = 0;
+    int cnt = 0;
+
+    class Worker** Work; // объект
+
+    Work = new Worker * [1];
+    while (menu_1 != 2)
     {
-        system("cls");
-        cout << "Хотите внести данные о новом работнике?\n 1 - да\n 2 - нет\n Любая другая кнопка - выход из программы" << endl;
-        cin >> ans;
-        if (ans == 1)
+        cout << "Меню:\n  1:Ввести данные о новом работнике?\n  2:Перейти в меню поиска" << endl;
+        cin >> menu_1;
+
+        switch (menu_1)
         {
-            library = (class Worker*)realloc(library, (i + 1) * sizeof(class Worker));
-            library[i].set();
-            i++;
-        }
-        else if (ans == 2)
-        {
-            int ans2;
-            cout << "Выберите:\n 1 - список работников, стаж работы которых на данном предприятии превышает заданное число лет" << endl;
-            cout << "2 - список работников, зарплата которых больше заданной" << endl << "3 - список работников, занимающих заданную должность" << endl;
-            cin >> ans;
-            show(ans, i);
-        }
-        else
+        case 1:
+
+            Work[0] = new Worker[cnt + 1];
+            for (int i = 0; i < cnt; i++)
+            {
+                Work[0][i] = Work[1][i];
+            }
+            Work[1] = new Worker[cnt + 1];
+
+            Work[0][cnt].set();
+            for (int i = 0; i < cnt + 1; i++)
+            {
+                Work[1][i] = Work[0][i];
+            }
+
+            cnt++;
             break;
-    } while (1);
-    free(library);
+        }
+
+    }
+
+    string zad_position;
+    int zad_salary;
+    int menu_2 = 0;
+    int N; // введенный стаж
+    while (menu_2 != 5)
+    {
+        cout << "Меню:\n    1:Поиск работников, заданной должности\n    2:Поиск работников, больше заданной зарплаты\n    3:Поиск работников, работающих больше заданного стажа\n    5:выход " << endl;
+        cin >> menu_2;
+        switch (menu_2)
+        {
+        case 1:
+            cout << "Поиск работников, заданной должности\n" << "Введите должность" << endl;
+            cin >> zad_position;
+            for (int j = 0; j < cnt; j++)
+            {
+                if (zad_position == Work[0][j].get_position())
+                {
+                    Work[0][j].show();
+                    cout << endl;
+                }
+            }
+            break;
+
+        case 2:
+            cout << "Поиск книг, больше заданной зарплаты\n" << "Введите зарплату" << endl;
+            cin >> zad_salary;
+            for (int j = 0; j < cnt; j++)
+            {
+                if (zad_salary < Work[0][j].get_salary())
+                {
+                    Work[0][j].show();
+                    cout << endl;
+                }
+            }
+            break;
+
+        case 3:
+            cout << "Поиск работников, чей стаж работы больше заданного\n" << "Введите необходимый стаж" << endl;
+            cin >> N;
+            cout << "работники, чей стаж больше" << endl;
+            for (int j = 0; j < cnt; j++)
+            {
+                if (2019 - Work[0][j].get_start_of_work() > N)
+                {
+                    Work[0][j].show();
+                    cout << endl;
+                }
+            }
+            break;
+        }
+    }
+    cout << "конец программы" << endl;
     return 0;
-}
-
-void show(int mode, int i)
-{
-    switch (mode)
-    {
-    case(1):
-    {
-        int experience;
-        cout << "Введите искомый стаж работы:" << endl;
-        cin >> experience;
-        for (int k = 0; k < i; k++)
-        {
-            if (library[k].sravni(experience) == 0)
-                library[k].get();
-        }
-        break;
-    }
-
-    case(2):
-    {
-        int pay;
-        cout << "Введите искомую зарплату:" << endl;
-        cin >> pay;
-        for (int k = 0; k < i; k++)
-        {
-            if (library[k].srav(pay) == 0)
-                library[k].get();
-        }
-        break;
-    }
-
-    case(3):
-    {
-        char name[100];
-        cout << "Введите искомую должность:" << endl;
-        cin.get();
-        cin.getline(name, 100);
-        for (int k = 0; k < i; k++)
-        {
-            if (library[k].srp(name) == 0)
-                library[k].get();
-        }
-        break;
-    }
-    }
-    system("pause");
 }
