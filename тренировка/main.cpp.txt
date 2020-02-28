@@ -1,0 +1,75 @@
+// элемент списка
+struct list_element
+{
+	int value;	// значение данного элемента списка
+	list_element* next;	// указатель на следующий элемент списка
+};
+
+// список
+struct list
+{
+	list_element* begin; // указатель на первый элемент списка
+	list_element* end; // указатель на последний элемент списка
+	size_t size;	// количество элементов в списке
+};
+
+// функция проверяет, пуст ли список
+bool empty(const list& list)
+{
+	if (list.size == 0) return 1;
+	return 0;
+}
+
+// добавление элемента в конец списка
+void push_back(list &list, int new_value)
+{
+	list_element* new_element = new list_element; // выделить память под переменную типа list_element и присвоить адрес
+													// начала выделенной памяти в переменную-указатель new_element
+	new_element->value = new_value; // пойти по указателю new_element, получить переменную типа list_element, которая там находится
+									// и в ней изменить поле value
+	new_element->next = nullptr;	// добавляем в конец, поэтому следующего элемента нет
+	// если список не пустой
+	if (!empty(list))	list.end->next = new_element;	// прежний последний элемент списка теперь указвывает на новый элемент
+	// если список пустой
+	else list.begin = new_element;  // новый элемент является началом списка			
+	list.end = new_element;	// новый элемент теперь является концом списка
+	list.size++;		// размер списка увеличился на единицу
+}
+
+// добавление в начало списка
+void push_front(list& list, int new_value)
+{
+	list_element* new_element = new list_element;   // выделить память под переменную типа list_element и присвоить адрес
+													// начала выделенной памяти в переменную-указатель new_element
+	new_element->value = new_value; // пойти по указателю new_element, получить переменную типа list_element, которая там находится
+									// и в ней изменить поле value
+	new_element->next = list.begin; // теперь указателю на следующий элемент списка присваивается прошлый первый элемент списка 
+	list.begin = new_element; // новый элемент является началом списка
+	//если список пустой
+	if (empty(list)) list.end = new_element; // новый элемент теперь является концом списка
+	list.size++; // размер списка увеличился на единицу
+}
+ 
+// удаление последнего элемента, возвращает значение этого элемента
+int pop_back(list& list)
+{ 
+	list_element* cur_element = list.begin; // переменная-указатель(текущий элемент) типа list_element указывает на начало списка
+	while (cur_element->next->next != nullptr) //пока это не предпоследний элемент
+	{
+		cur_element = cur_element->next; // двигаемся по элементам списка, пока не найдем предпоследний 
+	}
+
+}
+
+// удаление первого элемента, возвращает значение этого элемента
+int pop_front(list& list)
+{
+
+}
+
+int main()
+{
+	list MyList{ nullptr,nullptr,0 };
+	push_back(MyList,7);
+	push_back(MyList, 11);
+}
