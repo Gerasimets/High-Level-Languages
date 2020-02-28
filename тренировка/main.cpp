@@ -33,7 +33,7 @@ public:
 
 // this - указатель на объект, который вызвал данную фунцию
 
-list::list()
+list::list() //конструктор
 {
 	begin = nullptr;
 	end = nullptr;
@@ -55,9 +55,12 @@ void list::push_back(int new_value)
 	new_element->value = new_value; // пойти по указателю new_element, получить переменную типа list_element, которая там находится
 									// и в ней изменить поле value
 	new_element->next = nullptr;	// добавляем в конец, поэтому следующего элемента нет
-	new_element->prev = end; //указатель на предыдущий элемент указывает на прошлый последний элемент
 	// если список не пустой
-	if (!empty())	end->next = new_element;	// прежний последний элемент списка теперь указвывает на новый элемент
+	if (!empty())
+	{
+		end->next = new_element;	// прежний последний элемент списка теперь указвывает на новый элемент
+		new_element->prev = end; //указатель на предыдущий элемент указывает на прошлый последний элемент
+	}
 	// если список пустой
 	else begin = new_element;  // новый элемент является началом списка			
 	end = new_element;	// новый элемент теперь является концом списка
@@ -74,6 +77,8 @@ void list::push_front(int new_value)
 	new_element->next = begin; // теперь указателю на следующий элемент списка присваивается прошлый первый элемент списка 
 	new_element->prev = nullptr; //указатель на предыдущий элемент пустой, так как добавляем первый элемент
 	begin = new_element; // новый элемент является началом списка
+	//если список не пустой
+	if (!empty()) begin->prev = new_element; //
 	//если список пустой
 	if (empty()) end = new_element; // новый элемент теперь является концом списка
 	size++; // размер списка увеличился на единицу
@@ -82,24 +87,25 @@ void list::push_front(int new_value)
 // удаление последнего элемента, возвращает значение этого элемента
 void list::pop_back()
 { 
-	list_element* cur_element = begin; // переменная-указатель(текущий элемент) типа list_element указывает на начало списка
+	list_element* del_element = end; // переменная-указатель(предыдущий элемент) типа list_element указывает на предпоследний элемент списка
 	if (size != 1)
 	{
-		while (cur_element->next != end) //пока это не предпоследний элемент
-			cur_element = cur_element->next; // двигаемся по элементам списка, пока не найдем предпоследний 
-		delete cur_element->next;
-		cur_element->next = nullptr;
-		end = cur_element;
+		//end = end->prev; //указателю на последний элемент присваиваем предпоследний элемент  
+		end = del_element->prev; //указатель на последний элемент теперь указывает на предпоследний
+		                         //предпоследний элемент теперь является концом списка
+		del_element->next = nullptr;
+		delete del_element;
 	}
 	else
 	{
-		delete cur_element;
+		delete del_element;
 		begin = nullptr;
 		end = nullptr;
 	}
 	size--;
 }
 
+//удаление первого элемента
 void list::pop_front()
 {
 	list_element* element_to_delete = begin;
@@ -128,17 +134,17 @@ int main()
 	MyList.push_back(25);
 	MyList.push_front(3);
 	MyList.push_front(1);
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
-	MyList.pop_front();
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
-	MyList.pop_front();
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
-	MyList.pop_front();
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
-	MyList.pop_front();
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
-	MyList.pop_front();
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
-	MyList.pop_front();
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
+	if (!MyList.empty())	std::cout << MyList.back() << '\n';
+	MyList.pop_back();
+	if (!MyList.empty())	std::cout << MyList.back() << '\n';
+	MyList.pop_back();
+	if (!MyList.empty())	std::cout << MyList.back() << '\n';
+	MyList.pop_back();
+	if (!MyList.empty())	std::cout << MyList.back() << '\n';
+	MyList.pop_back();
+	if (!MyList.empty())	std::cout << MyList.back() << '\n';
+	MyList.pop_back();
+	if (!MyList.empty())	std::cout << MyList.back() << '\n';
+	MyList.pop_back();
+	if (!MyList.empty())	std::cout << MyList.back() << '\n';
 }
