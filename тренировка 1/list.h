@@ -11,22 +11,34 @@ struct list_element
 };
 
 // список
-class list
+class queue
 {
+public:
 	// данные
 	list_element* begin; // указатель на первый элемент списка
 	list_element* end; // указатель на последний элемент списка
 	size_t size;	// количество элементов в списке
-public:
+//public:
 	// конструктор
-	list();
+	queue();
+	//конструктор копирования
+	queue(const queue&);
 
 	// функции
 	bool empty() const;  // функция проверяет, пуст ли список
-	void push_back(int new_value);  // добавление элемента в конец списка
-	void push_front(int new_value);  // добавление в начало списка
-	void pop_back();  // удаление последнего элемента
-	void pop_front(); // удаление первого элемента
+	void push(int new_value);  // добавление элемента в конец списка
+	//void push_front(int new_value);  // добавление в начало списка
+	//void pop_back();  // удаление последнего элемента
+	void pop(); // удаление первого элемента
 	int back() const; // возвращает значение последнего элемента
 	int front() const; // возвращает значение первого элемента
+	//friend queue concat(const queue& Q1, const queue& Q2);
+};
+
+
+queue concat(const queue& Q1, const queue& Q2);
+
+class MyQueue : public queue
+{
+	int max_value();
 };
