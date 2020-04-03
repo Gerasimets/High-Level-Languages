@@ -2,22 +2,35 @@
 
 // this - указатель на объект, который вызвал данную фунцию
 
-list::list() //конструктор
+queue::queue() //конструктор
 {
 	begin = nullptr;
 	end = nullptr;
 	size = 0;
 }
 
+queue::queue(const queue & src) //конструктор копирования
+{
+	begin = nullptr;
+	end = nullptr;
+	size = 0;
+	list_element* temp = src.begin; //начало списка, из которого копируем
+	while (temp != 0) //пока не конец списка 
+	{
+		push(temp->value);
+		temp = temp->next;
+	}
+}
+
 // функция проверяет, пуст ли список
-bool list::empty() const
+bool queue::empty() const
 {
 	if (size == 0) return 1;
 	return 0;
 }
 
 // добавление элемента в конец списка
-void list::push_back(int new_value)
+void queue::push(int new_value)
 {
 	list_element* new_element = new list_element; // выделить память под переменную типа list_element и присвоить адрес
 													// начала выделенной памяти в переменную-указатель new_element
@@ -36,9 +49,9 @@ void list::push_back(int new_value)
 	end = new_element;	// новый элемент теперь является концом списка
 	size++;		// размер списка увеличился на единицу
 }
-
+/*
 // добавление в начало списка
-void list::push_front(int new_value)
+void queue::push_front(int new_value)
 {
 	list_element* new_element = new list_element;   // выделить память под переменную типа list_element и присвоить адрес
 													// начала выделенной памяти в переменную-указатель new_element
@@ -55,18 +68,18 @@ void list::push_front(int new_value)
 }
 
 // удаление последнего элемента, возвращает значение этого элемента
-void list::pop_back()
+void queue::pop_back()
 { 
 	list_element* del_element = end; // переменная-указатель(предыдущий элемент) типа list_element указывает на предпоследний элемент списка
-	end = end->prev;
+	end = end->prev; //последний элемент списка теперь указывает на предыдущий 
 	if (size == 1) begin = nullptr;
 	delete del_element;
 	if (size != 1) end->next = nullptr;
 	size--;
 }
-
+*/
 //удаление первого элемента
-void list::pop_front()
+void queue::pop()
 {
 	list_element* element_to_delete = begin;
 	begin = begin->next;
@@ -76,12 +89,46 @@ void list::pop_front()
 	size--;
 }
 
-int list::back() const
+int queue::back() const
 {
 	return end->value;
 }
 
-int list::front() const
+int queue::front() const
 {
 	return begin->value;
+}
+
+queue concat(const queue& Q1, const queue& Q2)
+{
+	queue Q;
+	list_element* temp = Q1.begin; //начало списка, из которого копируем
+	while (temp != 0) //пока не конец списка 
+	{
+		Q.push(temp->value);
+		temp = temp->next;
+	}
+
+	temp = Q2.begin;
+	while (temp != 0) //пока не конец списка 
+	{
+		Q.push(temp->value);
+		temp = temp->next;
+	}
+	return Q;
+}
+
+int MyQueue::max_value()
+{
+
+}
+
+int max()
+{
+	int a[5] = { 1,3,7,2,4 };
+	int max = a[0];
+	for (int i = 1; i < 5; i++)
+	{
+
+	}
 }
