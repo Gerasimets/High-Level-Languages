@@ -3,17 +3,31 @@
 
 int main()
 {
-	list MyList;
-	MyList.push_back(5);
-	MyList.push_front(7);
-	int a = MyList.back();
-	int b = MyList.front();
-	if (!MyList.empty())	std::cout << MyList.back() << '\n';
-	MyList.pop_back();
-	if (!MyList.empty())	std::cout << MyList.front() << '\n';
-	MyList.pop_front();
-	if (MyList.empty()) std::cout << "List is empty\n";
-	// то же самое с очередью. подобавлять, поудалять элементы, и убедиться, что они возвращаются в верном порядке
+	queue Q;
+	Q.push(5);
+	Q.push(2);
+	Q.push(4);
+	/*
+	std::cout << Q.front() << '\n';
+	Q.pop();
+	std::cout << Q.front() << '\n';
+	Q.pop();
+	Q.push(6);
+	std::cout << Q.front() << '\n';
+	Q.pop();
+	std::cout << Q.front() << '\n';
+	Q.pop();
+	if (Q.empty()) std::cout << "queue is empty\n";
+	*/
+	queue Q2(Q);
+	/*
+	Q.push(11);
+	Q2.pop();
+	*/
+	queue Q3 = concat(Q, Q2);
+
+	/*queue Q2 = Q;
+	std::cout << Q2 << '\n';*/
 }
 
 /*
